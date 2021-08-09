@@ -1,0 +1,143 @@
+# Ansible managed
+#
+# network interface settings ( Servdiscount 2020 )
+#
+# after modifying, apply changes with:
+##  sleep 10 | ifdown -a && ifup -a
+# and restart all VMs (but often a restart of Proxmox is required)
+#
+# then check with:
+## iptables -L -t nat
+## netstat-nat
+#
+# Traffic is ROUTED not bridged to eno1
+# Routing needs to be active: 'net.ipv4.ip_forward = 1' in /etc/sysctl.conf
+# check with: sysctl net.ipv4.ip_forward
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# A second network adapter, if available
+# iface enp1s0f1 inet manual
+
+# The main physical network adapter
+auto eno1
+iface eno1 inet static
+    # My Main IP
+    address 192.168.140.204
+    # limit network to the main IP only
+    netmask  255.255.255.255
+    # the Servdiscount gateway IP
+    pointopoint 192.168.140.254
+    gateway  192.168.140.254
+    # additional ips used by Docker
+        up ip addr add 192.168.1.210/32 dev eno1
+        up ip addr add 192.168.1.211/32 dev eno1
+    
+    post-up echo 1 > /proc/sys/net/ipv4/conf/eno1/proxy_arp
+	# this is the activation of arp proxying on eno1, to avoid confusing some network
+	# devices or avoid being blocked by some ISP : this way, the proxy answers all the
+	# arp requests with eno1 MAC address, instead of having each VM in the ProxMox
+	# hypervisor answering with its own virtual MAC address. Some devices or ISP's don't
+	# like seing one physical interface pretending to have a lot of MAC addresses.
+
+# Secondary IP on eno1
+auto eno1:1
+iface eno1:1 inet static
+      # used to access iscsi server
+      address 192.168.2.300
+      netmask 255.255.255.0
+
+# Main Bridge for VMs with their own additional IP
+#
+# Typical /etc/network/interfaces for guest VM
+#   auto eth0
+#   iface eth0 inet static
+#       # Additional IP
+# 	    address 89.163.150.43
+#	      netmask 255.255.255.255
+#       # The Main IP as gateway
+#       pointopoint 192.168.140.204
+#	      gateway 192.168.140.204
+#
+auto vmbr0
+iface vmbr0 inet static
+    # Bridge for routed additional IP's
+    address  192.168.140.204
+    # limit network to the main IP only
+    netmask  255.255.255.255
+    # we are not using bridged mode for eno1
+    bridge_ports none
+    # disable Spanning Tree Protocol
+    bridge_stp off
+    # no forwarding delay
+    bridge_fd 0
+    # additional IPs must be set to 'Routed' in Servdiscount ZKM network configuration (not 'Bridged')
+    # set a route for each of the additional virtual machine IPs
+        up ip route add 192.168.1.220/32 dev vmbr0
+        up ip route add 192.168.1.221/32 dev vmbr0
+        up ip route add 192.168.1.222/32 dev vmbr0
+    
+# Second Bridge for all of the NAT routed local IPs
+#
+# routed ports on all VMs on vmbr1 are are Internet accessible via the Main IP and all configured additional IP addresses
+# use PREROUTING -d 89.163.212.66 or -d 89.163.150.152 to respond only on on the respective IP address!
+#
+# - assign a new IP to each VM such as 10.10.10.VM# such as:
+#   iface eno1 inet static
+#       address 10.10.10.100
+#       netmask 255.255.255.0
+#       gateway 10.10.10.1
+#
+# - the DHCP server on Proxmox host will assign IP's in the range of 10.10.10.10 to 10.10.10.99
+#   and automatically create iptables port forwarding for SSH and HTTP
+
+auto vmbr1
+iface vmbr1 inet static
+  # Bridge for NAT routed IP's with DHCP
+	address  10.10.10.1
+	netmask  255.255.255.0
+	bridge_ports none
+	bridge_stp off
+	bridge_fd 0
+	# Setting up the NAT routing
+	post-up   iptables -t nat -A POSTROUTING -s '10.10.10.0/24' -o eno1 -j MASQUERADE
+	post-down iptables -t nat -D POSTROUTING -s '10.10.10.0/24' -o eno1 -j MASQUERADE
+
+# NAT routing for ports that need to be reachable (these ports need to be open in Proxmox firewall as well)
+
+        # A webserver (VM 200)
+        #                         add/delete rule                                     forward public IP      and PORT       to VMs private IP:PORT
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport 20022 -j DNAT --to 10.10.10.200:22
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport 20022 -j DNAT --to 10.10.10.200:22
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport   443 -j DNAT --to 10.10.10.200:443
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport   443 -j DNAT --to 10.10.10.200:443
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport    80 -j DNAT --to 10.10.10.200:80
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport    80 -j DNAT --to 10.10.10.200:80
+
+        # A webserver (VM 220)
+        #                         add/delete rule                                     forward public IP      and PORT       to VMs private IP:PORT
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport 22022 -j DNAT --to 10.10.10.220:22
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport 22022 -j DNAT --to 10.10.10.220:22
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport   443 -j DNAT --to 10.10.10.220:443
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport   443 -j DNAT --to 10.10.10.220:443
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport    80 -j DNAT --to 10.10.10.220:80
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport    80 -j DNAT --to 10.10.10.220:80
+
+        # TOR OpenBSD (VM 61121)
+        #                         add/delete rule                                     forward public IP      and PORT       to VMs private IP:PORT
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport 12122 -j DNAT --to 10.10.10.121:722
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport 12122 -j DNAT --to 10.10.10.121:722
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  9001 -j DNAT --to 10.10.10.121:9001
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  9001 -j DNAT --to 10.10.10.121:9001
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  9030 -j DNAT --to 10.10.10.121:9030
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  9030 -j DNAT --to 10.10.10.121:9030
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  9101 -j DNAT --to 10.10.10.121:9101
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  9101 -j DNAT --to 10.10.10.121:9101
+        post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  9130 -j DNAT --to 10.10.10.121:9130
+        post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  9130 -j DNAT --to 10.10.10.121:9130
+        # post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  8080 -j DNAT --to 10.10.10.121:80
+        # post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  8080 -j DNAT --to 10.10.10.121:80
+        # post-up   iptables -t nat -A PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  8443 -j DNAT --to 10.10.10.121:443
+        # post-down iptables -t nat -D PREROUTING  -i eno1 -p tcp -d 192.168.140.204 --dport  8443 -j DNAT --to 10.10.10.121:443

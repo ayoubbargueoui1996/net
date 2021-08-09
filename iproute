@@ -1,0 +1,8 @@
+default via 172.16.0.254 dev vmbr0 proto kernel onlink 
+10.0.0.0/16 dev vmbr7 proto kernel scope link src 10.0.0.254 linkdown 
+10.10.30.0/24 dev vmbr1 proto kernel scope link src 10.10.30.1 linkdown 
+172.16.0.0/24 dev vmbr0 proto kernel scope link src 172.16.0.211 
+172.23.10.0/24 dev vmbr2 proto kernel scope link src 172.23.10.1 linkdown 
+172.23.20.0/24 dev vmbr3 proto kernel scope link src 172.23.20.0 linkdown 
+172.23.30.0/24 dev vmbr4 proto kernel scope link src 172.23.30.0 linkdown 
+172.23.40.0/24 dev vmbr5 proto kernel scope link src 172.23.40.0 linkdown 

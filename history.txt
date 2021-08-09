@@ -1,0 +1,500 @@
+  166  ssh deploy@10.10.30.254
+  167  ssh deploy@10.10.30.254
+  168  ssh deploy@10.10.30.254
+  169   cat /sys/module/kvm_intel/parameters/nested   
+  170  exit
+  171  ssh deploy@10.10.30.254
+  172  ssh superg@10.10.30.198
+  173  ssh deploy@10.10.30.254
+  174  ssh deploy@10.10.30.254
+  175   udevadm trigger  
+  176   udevadm trigger  
+  177   udevadm trigger  
+  178  ls
+  179   udevadm trigger  
+  180   udevadm trigger  
+  181   udevadm trigger  
+  182  ssh deploy@10.10.30.254
+  183   udevadm trigger  
+  184  ssh deploy@10.10.30.254
+  185  clear
+  186  ssh deploy@10.10.30.197
+  187  ssh supergy@10.10.30.197
+  188  ssh deploy@10.10.30.254
+  189   udevadm trigger  
+  190   udevadm trigger  
+  191   udevadm trigger  
+  192   udevadm trigger  
+  193   udevadm trigger  
+  194   udevadm trigger  
+  195   udevadm trigger  
+  196  ssh deploy@10.10.30.254
+  197  ssh deploy@10.10.30.254
+  198  exit
+  199  ip addr
+  200  ip addr vmbr0
+  201  cd /var/lib/vz/
+  202  ls
+  203  cd dump/
+  204  ls
+  205  ls
+  206  sudo mv /tmp/vzdump-qemu-105-2021_07_08-09_40_53.log .
+  207  ls /tmp/*
+  208  exit
+  209   udevadm trigger  
+  210   udevadm trigger  
+  211   udevadm trigger  
+  212  ssh deploy@10.10.30.254
+  213  clear
+  214  ssh deploy@10.10.30.254
+  215   udevadm trigger  
+  216   udevadm trigger  
+  217   udevadm trigger  
+  218   udevadm trigger  
+  219  ssh deploy@10.10.30.254
+  220  clear
+  221  l
+  222  ssh deploy@10.10.30.254
+  223  ping 10.0.0.254
+  224  ping 10.0.0.230
+  225  ssh osm@10.0.0.230
+  226  cd .ssh/
+  227  ls
+  228  cat id_rsa.pub 
+  229  pwd
+  230  sudo mv /tmp/vzdump-qemu-105-2021_07_08-09_40_53.vma.zst /var/lib/vz/dump/.
+  231  cd /var/lib/vz/
+  232  ls
+  233  cd dump/
+  234  ls
+  235  ls
+  236  ls -lr
+  237  ls -lh
+  238  qmrestore vzdump-qemu-105-2021_07_08-09_40_53.vma.zst 108
+  239  man qmrestore 
+  240  qmrestore --storage local-lvm vzdump-qemu-105-2021_07_08-09_40_53.vma.zst 108 
+  241  qmrestore --storage local-lvm vzdump-qemu-105-2021_07_08-09_40_53.vma.zst 108 
+  242  ssh osm@10.0.0.230 
+  243    ssh-keygen -f "/root/.ssh/known_hosts" -R "10.0.0.230"
+  244  ssh osm@10.0.0.230 
+  245  exit
+  246  ssh osm@10.0.0.230 
+  247  ssh osm@10.0.0.230 
+  248  ssh superg@10.0.0.230 
+  249  ssh superg@10.10.30.130 
+  250  ssh superg@10.10.30.103 
+  251  ssh superg@10.10.30.103 
+  252  ssh osm@10.0.0.230 
+  253  clear
+  254  ssh superg@10.0.0.230 
+  255    ssh-keygen -f "/root/.ssh/known_hosts" -R "10.0.0.230"
+  256  cat .ssh/id_rsa.pub 
+  257  ssh superg@10.0.0.230 
+  258  ssh superg@10.0.0.230 
+  259  ssh superg@10.0.0.230 
+  260  ssh osm@10.0.0.230 
+  261  ssh superg@10.0.0.230 
+  262  ssh osm@10.0.0.230 
+  263  ssh osm@10.0.0.230 
+  264  ping 8.8.8.8
+  265  ip route
+  266  udevadm pve
+  267  udevadm trigger 
+  268  udevadm trigger 
+  269  udevadm trigger 
+  270  ssh osm@10.0.0.230 
+  271  ssh osm@10.0.0.230 
+  272  ip a
+  273  ping 8.8.8.8
+  274  ssh osm@10.0.0.230 
+  275  ssh deploy@10.10.30.254
+  276  ls
+  277  cd Dev
+  278  ls
+  279  cd infra/
+  280  ls
+  281  cd ..
+  282  ls
+  283  sudo qm list
+  284  qm terminal 201
+  285  qm info 201
+  286  qm config 201
+  287  qm cloudinit dimp 201 
+  288  qm cloudinit dump 201 
+  289  qm cloudinit dump 201 network
+  290  qm cloudinit dump 201 user
+  291  qm cloudinit dump 201 metadata
+  292  qm cloudinit dump 201 metad
+  293  qm cloudinit dump 201 meta
+  294  ip addr show
+  295  ssh deploy 10.10.30.254
+  296  ssh deploy@10.10.30.254
+  297  exit
+  298  ls
+  299  ls
+  300  ssh superg@10.10.30.99
+  301  ssh superg@10.10.30.99
+  302  ssh superg@10.10.30.99
+  303  ssh superg@10.10.30.199
+  304  route -(n
+  305  route -n
+  306  route -n
+  307  ip route show
+  308  exit
+  309  iptables -t nat -L
+  310  iptables -t nat -L
+  311  iptables -t nat -L | grep 10.10
+  312  iptables -t nat -L | grep 10.10.30.10
+  313  iptables -t nat -L | grep 10\.10.30.10
+  314  iptables -t nat -L | grep 10\.10.30\.10
+  315  ptables -t nat -L |
+  316  iptables -t nat -L | grep 30\.10
+  317  iptables -t nat -L | grep .*30\.10
+  318  iptables -t nat -L | grep 30\.10$
+  319  iptables -t nat -L | grep 30\.10
+  320  iptables -t nat -L | grep 30\.10:.*$
+  321  exit
+  322  exit
+  323  qm list
+  324  iptables -t nat -L
+  325  exit
+  326  ls
+  327  nslookup 8.8.8.8
+  328  ls
+  329  ssh superg@10.10.10.10
+  330  ssh superg@10.10.30.10
+  331  iptables -t -nat -L
+  332  iptables -t nat -L
+  333  iptables -t nat -L | grep 22210
+  334  ssh -p 22210 superg@10.0.3.163
+  335  ssh -v -p 22210 superg@10.0.3.163
+  336  ovs-vsctl show
+  337  ovs-vsctl show
+  338  exit
+  339  ls
+  340  qm list
+  341  cd /var/lib/vz/
+  342  ls
+  343  cd template/
+  344  ls
+  345  cd qemu/
+  346  ls
+  347  cd ..
+  348  cd iso/
+  349  ls
+  350  cd ..
+  351  cache_
+  352  cd ..
+  353  ls
+  354  cd dump/
+  355  ls
+  356  ls
+  357  cd ..
+  358  ls
+  359  cd snippets/
+  360  ls
+  361  cd ..
+  362  ls
+  363  cd ..
+  364  ls
+  365  cd ..
+  366  cd ..
+  367  ls
+  368  iptables -t nat -V
+  369  iptables -t nat -L
+  370  ping ntp.irt-aese.local
+  371  ping 10.1.4.3
+  372  ping forge-is.pf.irt-saintexupery.com
+  373  ls
+  374  cd /root/
+  375  ls
+  376  cd .ssh/
+  377  ls
+  378  cat config 
+  379  cat authorized_keys 
+  380  vi known_hosts
+  381  cd /etc/
+  382  cat resolv.conf
+  383  qm console
+  384  qm console 201
+  385  qm terminal 201
+  386  ip addr show
+  387  ip tables -t nat -L
+  388  iptables -t nat -L
+  389  ping 10.0.3.254
+  390  ping 10.0.3.254
+  391  ls
+  392  cd infra/
+  393  ls
+  394  ls
+  395  cd files/
+  396  ls
+  397  ls
+  398  cd
+  399  qm list
+  400  ssh deploy@10.10.30.254
+  401  ssh deploy@10.10.30.254
+  402  ssh deploy@10.10.30.254
+  403  ssh deploy@10.10.30.254
+  404  ssh deploy@10.10.30.254
+  405  ssh deploy@10.10.30.254
+  406  ls
+  407  ssh deploy@10.10.30.254
+  408  ssh superg@10.10.30.199
+  409  qm list
+  410  qm start 299
+  411  ls
+  412  cd ..
+  413  ls
+  414  ssh superg@10.10.10.10
+  415  ssh superg@10.10.30.10
+  416  ssh superg@10.10.30.107
+  417  ssh superg@10.10.30.17
+  418  ssh superg@10.10.30.117
+  419  ssh osm@10.0.0.230
+  420  ssh superg@172.20.23.17
+  421  ssh superg@172.23.20.17
+  422  ssh superg@172.23.10.17
+  423  ssh osm@10.1C0.10.99
+  424  ssh superg@10.10.10.99
+  425  ssh root@10.0.3.254
+  426  cd /etc/network/
+  427  vi interfaces
+  428  cd /etc/network/
+  429  ls
+  430  vi interfaces
+  431  ip addr show vmbr0
+  432  ping 192.158.140.24
+  433  ping 192.168.140.24
+  434  ping 192.168.140.204
+  435  ping 192.168.140.212
+  436  ping 192.168.140.254
+  437  ip route
+  438  ip link show dev vmbr0
+  439  ls
+  440  vi interfaces
+  441  ping 172.16.254.1
+  442  ping 172.16.254.10
+  443  vi interfaces
+  444  ifdown vmbr0
+  445  vi interfaces
+  446  ifup vmbr0
+  447  vi interfaces
+  448  ifup vmbr0
+  449  ping 192.168.140.212
+  450  ping 192.168.140.254
+  451  ping 192.168.140.24
+  452  ip addr
+  453  ip addr show vmbr0
+  454  ifdown vmbr0
+  455  ifdown  eno1
+  456  ifup  eno1
+  457  ip addr show
+  458  ip addr show ddev vmbr0
+  459  ip addr show dev vmbr0
+  460  ifup vmbr0
+  461  ip addr show dev vmbr0
+  462  vi interfaces
+  463  vi interfaces
+  464  vi interfaces
+  465  vi interfaces
+  466  sudo ifdown vmbr0
+  467  sudo ifup vmbr0
+  468  vi interfaces
+  469  brctl show
+  470  ls
+  471  ip addr show
+  472  ping 10.0.3.163
+  473  ping 10.0.3.161
+  474  ping 10.0.3.141
+  475  ssh superg@10.10.10.199
+  476  ssh superg@10.10.30.99
+  477  ip a s
+  478  ip a s
+  479  ip a s | less
+  480  ip a s | grep 172
+  481  nmtui
+  482  nmcli
+  483  cat /etc/*rele*
+  484  vi /etc/network/interfaces
+  485  systemctl restart network-online.target 
+  486  systemctl restart network-online.target  networking.service 
+  487  ip a s 
+  488  ip a s  | less
+  489  vi /etc/network/interfaces
+  490  systemctl restart network-online.target  networking.service 
+  491  ping 172.16.0.254
+  492  ip a s | less
+  493  ip r s
+  494  ping 172.16.0.254
+  495  apt update
+  496  cat /etc/resolv
+  497  cat /etc/resolv.conf
+  498  systemctl reboot
+  499  ip a s 
+  500  ping 172.16.0.254
+  501  ss -tunlp
+  502  vi /etc/network/interfaces
+  503  ip a | less
+  504  vi /etc/network/interfaces
+  505  systemctl restart network-online.target  networking.service 
+  506  ip a s | grep eno
+  507  vi /etc/network/interfaces
+  508  cp /etc/network/interfaces interfaces.old
+  509  vi /etc/network/interfaces
+  510  systemctl stop networking.service 
+  511  systemctl start networking.service 
+  512  ip a s
+  513  vi /etc/network/interfaces
+  514  systemctl stop networking
+  515  vi /etc/network/interfaces
+  516  systemctl restart networking.service 
+  517  ipa s 
+  518  ip a s 
+  519  showmount -e nas01.irtse-pf.ext
+  520  nslookup nas01.irtse-pf.ext
+  521  cat /etc/resolv.conf
+  522  vi /etc/network/interfaces
+  523  vi /etc/resolv.conf
+  524  nslookup nas01.irtse-pf.ext
+  525  cp interfaces.old /etc/network/interfaces
+  526  vi /etc/network/interfaces
+  527  systemctl restart networking.service 
+  528  ip a s
+  529  ip a s | less
+  530  vi /etc/network/interfaces
+  531  systemctl restart networking.service 
+  532  ip a
+  533  ping 10.10.30.1
+  534  clear
+  535  ip a
+  536  ping 172.23.20.00
+  537  ping 172.23.20.0
+  538  history
+  539  vi /etc/network/interfaces
+  540  clear
+  541  ls
+  542  cd /etc/network/
+  543  ls
+  544  vi interfaces
+  545  clear
+  546  history
+  547  cat /etc/resolv.conf
+  548  free -h
+  549  ip a
+  550  clear
+  551  ip a
+  552  ping 172.16.0.207
+  553  cd .. 
+  554  cd ..
+  555  ls
+  556  cd root/
+  557  ls
+  558  cd .ssh/
+  559  ls
+  560  vi authorized_keys 
+  561  clear
+  562  ls
+  563  cd ..
+  564  ls
+  565  cd /etc/network/interfaces.d/
+  566  cd ..
+  567  ls
+  568  git 
+  569  clear
+  570  ls
+  571  git init
+  572  git commit -m "first"
+  573  git config --global user.email "ayoubdaraji123@gmail.com"
+  574  git config --global user.name "ayoubbargueoui1996"
+  575  git commit -m "first"
+  576  git branch -M main
+  577  git branch main
+  578  git remote add origin https://github.com/ayoubbargueoui1996/net.git
+  579  git add .
+  580  git commit -m "first"
+  581  git push origin main
+  582  git branch -M main
+  583  git push origin main
+  584  git push origin main
+  585  git push origin main
+  586  git push origin main
+  587  git push origin main
+  588  rm -rf .git/
+  589  clear
+  590  ls
+  591  history
+  592  cat /etc/resolv.conf
+  593  cleqr
+  594  clear
+  595  ls
+  596  history
+  597  '
+  598  clear
+  599  ls
+  600  cd ..
+  601  cd ..
+  602  clear
+  603  ls
+  604  cd root/
+  605  ls
+  606  cat interfaces.old 
+  607  clear
+  608  ls
+  609  git init 
+  610  rm -rf .git
+  611  git clone https://github.com/ayoubbargueoui1996/net.git
+  612  cd net/
+  613  cd ..
+  614  ls
+  615  cp interfaces.old net/
+  616  cat infra/
+  617  cd infra/
+  618  ls
+  619  cat files/
+  620  cd files/
+  621  ls
+  622  cd ..
+  623  cd ..
+  624  ls
+  625  cat 101.conf 
+  626  ls
+  627  cp 101.conf net/
+  628  cp sfc/ net/
+  629  cp -r sfc/ net/
+  630  cd  sfc/
+  631  ls
+  632  cd ..
+  633  ls
+  634  cd net/
+  635  ls
+  636  git add .
+  637  git commit -m "add news"
+  638  ls
+  639  git push origin main
+  640  cd ..
+  641  clear
+  642  ls
+  643  cd /etc/network/
+  644  vi interfaces
+  645  cd /root/
+  646  cd net/
+  647  ls
+  648  cat history.txt >> history
+  649  cat history >> history.txt
+  650  ls
+  651  vi history.txt 
+  652  clear
+  653  ls
+  654  vi history
+  655  clear
+  656  ls
+  657  cat history
+  658  cat history.txt 
+  659  rm -rf history
+  660  rm -rf history.txt 
+  661  clear
+  662  ls
+  663  history
+  664  clear
+  665  history >> history.txt
